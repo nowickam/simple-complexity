@@ -1,21 +1,24 @@
 int[][] trail;
 Agent[] agents;
 
-int AG_NUM = 10000;
-float EV = 0.1;
+int AG_NUM = 25000;
+int B_COL = 255;
+int COL = 0;
+float EV_DIV = 250;
+float EV = (COL-B_COL)/EV_DIV;
 float DIFF = 0.75;
 
 void setup()
 {
-  size(600,600);
-  background(0);
+  size(900,900);
+  background(B_COL);
   
   trail = new int[height][width];
   
   agents = new Agent[AG_NUM];
   for(int i=0; i<AG_NUM; i++)
   {
-    agents[i] = new Agent(random(width), random(height-50, height-5), random(TWO_PI));
+    agents[i] = new Agent(random(width), random(height), random(TWO_PI));
   }
 }
 
@@ -59,8 +62,8 @@ void diffuseAndEvaporate()
              }
            }
        }
-       float valEv = max(0, red(pixels[y*width+x])-EV);
-       float valEvBlur = max(0, sum/9);
+       float valEv = red(pixels[y*width+x])-EV;
+       float valEvBlur = sum/9;
        color valEvDiff = lerpColor(color(valEvBlur), color(valEv), DIFF);
        pixels[y*width+x] = valEvDiff;
      }

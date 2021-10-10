@@ -1,8 +1,10 @@
-float SS = 0.5;
-float SA = radians(22.5);
-float SO = 9;
-float SW = 1;
-float RA = radians(45);
+float SS = 1;                // step size
+float SA = radians(22.5);    // sensing angle
+float SO = 9;                // sensing offset
+float SW = 2;                // sensor width
+float RA = radians(45);      // rotation angle
+float RRA = 0.5;             // random factor in the rotation angle
+
 
 class Agent
 {
@@ -22,7 +24,7 @@ class Agent
     location.y += sin(rotation)*SS;
     if(checkEdge() && attemptMove())
     {
-        pixels[round(location.y)*width+round(location.x)] = color(255);
+        pixels[round(location.y)*width+round(location.x)] = color(COL);
     }
     else
     {
@@ -32,9 +34,11 @@ class Agent
   
   boolean attemptMove()
   {
+    // if the agents hasn not moved
     if(round(location.y)*width+round(location.x) == round(location.y-sin(rotation)*SS)*width+round(location.x-cos(rotation)*SS))
       return true;
-    return red(pixels[round(location.y)*width+round(location.x)]) < 255;
+    // if there is an agent on the spot
+    return red(pixels[round(location.y)*width+round(location.x)]) != COL;
   }
   
   boolean checkEdge()
@@ -49,17 +53,20 @@ class Agent
   {
     float x, y, sum;
     sum = 0;
+    // location of the sensor
     x = location.x+cos(rotation+rotDelta)*SO;
     y = location.y+sin(rotation+rotDelta)*SO;
-    for(float i=-SS; i <=SS; i++)
+    // kernel SSxSS 
+    for(float i=-SW; i <=SW; i++)
     {
-      for(float j=-SS; j<=SS; j++)
+      for(float j=-SW; j<=SW; j++)
       {
          if(round(x+j) >= 0 && round(x+j) < width && round(y+i) >= 0 && round(y+i) < height)
            sum += red(pixels[round(y+i)*width+round(x+j)]);
       }
     }
-    return sum;
+    // constant denoting the right sign for the sensing 
+    return (COL-B_COL)*sum;
   }
   
   void turn()
@@ -74,8 +81,8 @@ class Agent
     else if(F < FL && F < FR)
       rotation += random(-1,1)*RA;
     else if(FL < FR)
-      rotation += RA;
+      rotation += random(-RRA, RRA)*RA + RA;
     else if(FR < FL)
-      rotation -= RA;
+      rotation -= random(-RRA, RRA)*RA + RA;
   }
 }
