@@ -1,20 +1,32 @@
-float SS = 1;                // step size
-float SA = radians(22.5);    // sensing angle
-float SO = 9;                // sensing offset
-float SW = 2;                // sensor width
-float RA = radians(45);      // rotation angle
-float RRA = 0.5;             // random factor in the rotation angle
-
-
 class Agent
 {
   PVector location;
+  int r, g, b;
   float rotation;
   
-  Agent(float x, float y, float r)
+  float SS;              // step size
+  float SA;              // sensing angle
+  float SO;              // sensing offset
+  float SW;              // sensor width
+  float RA;              // rotation angle
+  float RRA;             // random factor in the rotation angle
+  
+  
+  
+  Agent(float x, float y, float rot, int _r, int _g, int _b)
   {
     location = new PVector(x, y);
-    rotation = r;
+    rotation = rot;
+    r = _r;
+    g = _g;
+    b = _b;
+    
+    SS = 2;               
+    SA = radians(22.5);   
+    SO = 15;               
+    SW = 2;              
+    RA = radians(12.5);     
+    RRA = 0.5;      
   }
   
   void move()
@@ -24,10 +36,12 @@ class Agent
     location.y += sin(rotation)*SS;
     if(checkEdge() && attemptMove())
     {
-        pixels[round(location.y)*width+round(location.x)] = color(COL);
+        pixels[round(location.y)*width+round(location.x)] = color(r,g,b);
     }
     else
     {
+      location.x -= cos(rotation)*SS;
+      location.y -= sin(rotation)*SS;
       rotation = random(TWO_PI);
     }
   }
@@ -38,7 +52,7 @@ class Agent
     if(round(location.y)*width+round(location.x) == round(location.y-sin(rotation)*SS)*width+round(location.x-cos(rotation)*SS))
       return true;
     // if there is an agent on the spot
-    return red(pixels[round(location.y)*width+round(location.x)]) != COL;
+    return red(pixels[round(location.y)*width+round(location.x)]) != r && blue(pixels[round(location.y)*width+round(location.x)]) != b && green(pixels[round(location.y)*width+round(location.x)]) != g;
   }
   
   boolean checkEdge()
@@ -62,11 +76,11 @@ class Agent
       for(float j=-SW; j<=SW; j++)
       {
          if(round(x+j) >= 0 && round(x+j) < width && round(y+i) >= 0 && round(y+i) < height)
-           sum += red(pixels[round(y+i)*width+round(x+j)]);
+           sum += red(pixels[round(y+i)*width+round(x+j)])+blue(pixels[round(y+i)*width+round(x+j)])+green(pixels[round(y+i)*width+round(x+j)]);
       }
     }
     // constant denoting the right sign for the sensing 
-    return (COL-B_COL)*sum;
+    return ((r+g+b)-(rB_COL+gB_COL+bB_COL))*sum;
   }
   
   void turn()
