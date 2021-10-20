@@ -32,7 +32,7 @@ class ExpandingBlob
       noiseY += 0.4;
       //ellipse(centers[i].x, centers[i].y, 5, 5);
     }
-    avgRadius = 3500;
+    avgRadius = 500;
     margin = 10;
     
     radDiff = avgRadius/10;
