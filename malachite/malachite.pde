@@ -34,7 +34,7 @@ boolean drawn;
 
 void setup()
 {
-  size(700,1000,P2D);
+  size(7000,10000,P2D);
   background(BCOL);
   stroke(255);
   noFill();

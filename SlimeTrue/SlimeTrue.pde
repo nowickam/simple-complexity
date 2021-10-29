@@ -13,12 +13,12 @@ void setup()
 {
   size(600, 600, P2D);
 
-  rB_COL = 116;
-  gB_COL = 223;
-  bB_COL = 184;
+  rB_COL = 255;
+  gB_COL = 255;
+  bB_COL = 255;
   background(rB_COL, gB_COL, bB_COL);
 
-  sim = new Simulation1();
+  sim = new Simulation2();
 }
 
 void draw()

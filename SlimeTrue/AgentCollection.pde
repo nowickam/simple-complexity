@@ -11,9 +11,9 @@ class AgentCollection
     agents = new Agent[n];
     
     EV_DIV = 1000;
-    rEV = (rB_COL-r)/EV_DIV;
-    gEV = (gB_COL-g)/EV_DIV;
-    bEV = (bB_COL-b)/EV_DIV;
+    rEV = -(rB_COL-r)/EV_DIV;
+    gEV = -(gB_COL-g)/EV_DIV;
+    bEV = -(bB_COL-b)/EV_DIV;
     
     float x, y, rot;
   
