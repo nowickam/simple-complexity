@@ -1,6 +1,6 @@
 # simple-complexity
 
-Three prints inspired by malachite formation patterns and singular-cell organisms - under the umbrella term of complexity emerging from elementary interactions between cells and elements.
+Three prints inspired by malachite formation patterns and slime mold - under the umbrella term of complexity emerging from elementary interactions between cells and elements.
 
 Every medium carries an imperfection specific to the material or technique used in the process of production. What is the imperfection of a computer? In this work, it was the human programmer. In its precise execution of every command, the human becomes the source of desirable and undesirable phenomena.
 
